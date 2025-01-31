@@ -54,6 +54,10 @@ function parseJwt(token) {
 }
 
 // Optimized login function using async/await
+// Login Flow:
+// When a user logs in, the loginUser function sends credentials to the API.
+// If successful, tokens are stored in localStorage, Axios headers are set, and the user is redirected based on their role.
+// If an error occurs, setError(true) is called, and the loading state is stopped.
 async function loginUser(dispatch, login, password, history, setIsLoading, setError) {
   try {
     setIsLoading(true);
@@ -91,6 +95,10 @@ async function loginUser(dispatch, login, password, history, setIsLoading, setEr
 }
 
 // Optimized signOut function
+// Sign Out Flow:
+// The signOut function calls the API to blacklist the refresh token.
+// It then clears all items from localStorage, resets Axios authorization headers, and dispatches the SIGN_OUT_SUCCESS action to update the state.
+// Finally, the user is redirected to the login page.
 async function signOut(dispatch, history) {
   try {
     // Call API to blacklist the refresh token
