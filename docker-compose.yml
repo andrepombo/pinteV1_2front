@@ -1,0 +1,12 @@
+services:
+  app:
+    # Build the image using the Dockerfile in the current directory
+    build: .
+    container_name: pinteV1.2front
+    
+    # Expose the port 80 from the container to port 80 on your machine
+    ports:
+      - "80:80"
+
+    # Ensure the container runs as a background process (daemon)
+    restart: unless-stopped
