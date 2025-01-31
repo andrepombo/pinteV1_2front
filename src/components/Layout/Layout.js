@@ -25,7 +25,6 @@ import EditColab from "../../pages/forms/Edit";
 import EquipeColab from "../../pages/forms/Equipe";
 import Typography from "../../pages/typography";
 import Notifications from "../../pages/notifications/Notifications";
-import Maps from "../../pages/maps";
 import Tables from "../../pages/tables";
 import TablesEpis from "../../pages/tables/TablesEpis";
 import TableUsers from "../../pages/tables/TableUsers";
@@ -69,7 +68,6 @@ function Layout() {
           <Route exact path="/app/colaboradores" component={Colabs} />
           <Route exact path="/app/colabsobra/:board/:obra_id" component={ColabsObra} />
           <Route exact path="/app/notifications" component={Notifications} />
-          <Route exact path="/app/ui/maps" component={Maps} />
           <Route exact path="/app/ui/icons" component={Icons} />
           <Route exact path="/app/ui/charts" component={Charts} />
         </Switch>
