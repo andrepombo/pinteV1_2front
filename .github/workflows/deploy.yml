@@ -20,7 +20,6 @@ jobs:
         echo "ENV=${ENV}" >> .env
         echo "REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_API_BASE_URL }}" > .env
 
-
     - name: Acessar EC2 e instalar Docker e Docker Compose se necessário
       uses: appleboy/ssh-action@v0.1.10
       with:
