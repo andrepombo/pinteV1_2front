@@ -1,0 +1,90 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Create .env file
+      env:
+        ENV: ${{ secrets.ENV }}
+        EC2_SSH_USER: ${{ secrets.EC2_SSH_USER }}
+      run: |
+        echo "ENV=${ENV}" >> .env
+        echo "DEBUG=${{ secrets.DEBUG }}" > .env
+        echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
+        echo "CSRF_TRUSTED_ORIGINS=${{ secrets.CSRF_TRUSTED_ORIGINS }}" >> .env
+        echo "DJANGO_SETTINGS_MODULE=${{ secrets.DJANGO_SETTINGS_MODULE }}" >> .env
+        echo "ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }}" >> .env
+        echo "CORS_ALLOWED_ORIGINS=${{ secrets.CORS_ALLOWED_ORIGINS }}" >> .env
+        echo "KEY_TRELLO_API=${{ secrets.KEY_TRELLO_API }}" >> .env
+        echo "TOKEN_TRELLO_API=${{ secrets.TOKEN_TRELLO_API }}" >> .env
+        # echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env
+        # echo "POSTGRES_PASS=${{ secrets.POSTGRES_PASS }}" >> .env
+        # echo "POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}" >> .env
+        # echo "POSTGRES_DB_NAME=${{ secrets.POSTGRES_DB_NAME }}" >> .env
+        # echo "POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}" >> .env
+
+    - name: Acessar EC2 e instalar Docker e Docker Compose se necessário
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ubuntu
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          # Verifica se o Docker está instalado
+          if ! command -v docker &> /dev/null
+          then
+            echo "Docker não encontrado. Instalando..."
+            sudo apt-get update
+            sudo apt-get install -y docker.io
+            sudo systemctl start docker
+            sudo systemctl enable docker
+            sudo usermod -aG docker ubuntu
+            echo "Docker instalado com sucesso."
+          else
+            echo "Docker já está instalado. Pulando instalação."
+          fi
+
+          # Verifica se o Docker Compose está instalado
+          if ! command -v docker-compose &> /dev/null
+          then
+            echo "Docker Compose não encontrado. Instalando..."
+            sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+            sudo chmod +x /usr/local/bin/docker-compose
+            echo "Docker Compose instalado com sucesso."
+          else
+            echo "Docker Compose já está instalado. Pulando instalação."
+          fi
+
+    - name: Copy files with SSH
+      uses: easingthemes/ssh-deploy@main
+      with:
+        SSH_PRIVATE_KEY: ${{secrets.EC2_SSH_KEY}}
+        ARGS: "-rlgoDzvc -i"
+        SOURCE: "./"
+        REMOTE_HOST: ${{secrets.EC2_HOST}}
+        REMOTE_USER: ${{secrets.EC2_SSH_USER}}
+        TARGET: '/home/${{secrets.EC2_SSH_USER}}/front'
+        EXCLUDE: "/dist/, /node_modules/"
+        SCRIPT_AFTER: |
+          # Build and start the services defined in docker-compose.yml
+          cd /home/${{ secrets.EC2_SSH_USER }}/front
+
+          echo "Stopping and removing old containers..."
+          sudo docker-compose down
+
+          echo "Building and starting containers..."
+          sudo docker-compose up -d --build
+
+          echo "Cleaning up unused resources..."
+          sudo docker system prune --volumes -f ...
+
+

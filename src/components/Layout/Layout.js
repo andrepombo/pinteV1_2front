@@ -25,6 +25,7 @@ import EditColab from "../../pages/forms/Edit";
 import EquipeColab from "../../pages/forms/Equipe";
 import Typography from "../../pages/typography";
 import Notifications from "../../pages/notifications/Notifications";
+
 import Tables from "../../pages/tables";
 import TablesEpis from "../../pages/tables/TablesEpis";
 import TableUsers from "../../pages/tables/TableUsers";
