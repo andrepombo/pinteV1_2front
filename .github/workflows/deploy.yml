@@ -66,13 +66,15 @@ jobs:
           # Build and start the services defined in docker-compose.yml #
           cd /home/${{ secrets.EC2_SSH_USER }}/front
 
-          echo "Stopping and removing old containers..."
-          sudo docker compose down --rmi all || true
+          echo "Cleaning up unused resources..."
+          sudo docker system prune --volumes -f
+
+          #echo "Stopping and removing old containers..."
+          #sudo docker compose down
 
           echo "Building and starting containers..."
           sudo docker-compose up -d --build
 
-          echo "Cleaning up unused resources..."
-          sudo docker system prune --volumes -f ...
+         
 
 
