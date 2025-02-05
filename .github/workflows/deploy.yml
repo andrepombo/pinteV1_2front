@@ -63,7 +63,7 @@ jobs:
         TARGET: '/home/${{secrets.EC2_SSH_USER}}/front'
         EXCLUDE: "/dist/, /node_modules/"
         SCRIPT_AFTER: |
-          # Build and start the services defined in docker-compose.yml ##
+          # Build and start the services defined in docker-compose.yml ###
           cd /home/${{ secrets.EC2_SSH_USER }}/front
 
           echo "Cleaning up unused resources..."
