@@ -8,18 +8,18 @@ services:
     ports:
       - "80:80"
 
-    # volumes:
-    # - ./certbot/conf:/etc/letsencrypt
-    # - ./certbot/www:/var/www/certbot
+    volumes:
+    - ./certbot/conf:/etc/letsencrypt
+    - ./certbot/www:/var/www/certbot
 
     # Ensure the container runs as a background process (daemon)
     restart: unless-stopped
 
-  # certbot:
-  #   image: certbot/certbot
-  #   container_name: certbot
-  #   volumes:
-  #     - ./certbot/conf:/etc/letsencrypt
-  #     - ./certbot/www:/var/www/certbot
-  #   command: certonly --webroot -w /var/www/certbot --keep-until-expiring --email andrebastos85@gmail.com -d controlepinte.com.br -d www.controlepinte.com.br --agree-tos
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    command: certonly --webroot -w /var/www/certbot --keep-until-expiring --email andrebastos85@gmail.com -d controlepinte.com.br -d www.controlepinte.com.br --agree-tos
 
