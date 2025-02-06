@@ -22,6 +22,7 @@
     "react-apexcharts": "^1.4.0",
     "react-avatar": "^5.0.3",
     "react-dom": "^16.12.0",
+    "react-icons": "^5.4.0",
     "react-input-mask": "2.0.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "5.0.1",
@@ -32,6 +33,7 @@
     "source-map-explorer": "^2.5.2",
     "tinycolor2": "^1.4.2",
     "web-vitals": "^2.1.4",
+    "xlsx": "^0.18.5",
     "yarn": "^1.22.18"
   },
   "devDependencies": {
