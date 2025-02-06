@@ -6,7 +6,7 @@ services:
 
     # Expose the port 80 from the container to port 80 on your machine
     ports:
-      - "443:443"
+      - "80:80"
 
     volumes:
     - ./certbot/conf:/etc/letsencrypt

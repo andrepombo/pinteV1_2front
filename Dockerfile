@@ -19,7 +19,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /build /usr/share/nginx/html
 
 # Expose port 80 to be accessible externally
-EXPOSE 443
+EXPOSE 80
 
 # Start Nginx server
 CMD ["nginx", "-g", "daemon off;"]
