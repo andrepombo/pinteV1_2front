@@ -149,7 +149,7 @@ function Cards() {
 
   const handleRowDelete = (oldData, resolve) => {
     console.log(oldData.id)
-    axiosInstance.delete('deletecard/'+oldData.id)
+    axiosInstance.delete('deletecard/'+ oldData.id +'/')
       .then(res => {
 
         const dataDelete = [...data];
