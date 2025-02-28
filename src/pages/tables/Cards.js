@@ -10,7 +10,7 @@ import MaterialTable from "material-table";
 import  { Chip } from "@material-ui/core";
 import useStyles from "./styles";
 import * as XLSX from 'xlsx';
-import { FaFileExcel } from 'react-icons/fa'; // Excel Icon
+import { FaFileExcel } from 'react-icons/fa'; 
 
 
 
@@ -184,7 +184,7 @@ function Cards() {
               data={data}
               actions={[
                 {
-                  icon: () => <FaFileExcel />,  
+                  icon: () => <FaFileExcel />,
                   tooltip: 'Export to Excel',
                   isFreeAction: true,
                   onClick: handleExportExcel,
