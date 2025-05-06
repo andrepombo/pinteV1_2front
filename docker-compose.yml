@@ -15,7 +15,7 @@ services:
     # Ensure the container runs as a background process (daemon)
     restart: unless-stopped
 
-  # certbot:
+  # certbot:.
   #   image: certbot/certbot
   #   container_name: certbot
   #   volumes:
